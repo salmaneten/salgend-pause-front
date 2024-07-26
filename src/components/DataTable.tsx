@@ -14,13 +14,13 @@ interface DataTableProps<T> {
 const DataTable = <T,>({ data, fields }: DataTableProps<T>) => {
   return (
 
-<TableContainer>
-  <Table variant='simple'>
+<TableContainer flex='2' bgColor='dark5' borderRadius='12px'>
+  <Table >
    
     <Thead>
       <Tr>
           {fields.map((field, index) => (
-            <Th key={index}>{field.label}</Th>
+            <Th key={index} textColor='light'>{field.label} </Th>
           ))}
       </Tr>
     </Thead>
@@ -28,7 +28,7 @@ const DataTable = <T,>({ data, fields }: DataTableProps<T>) => {
         {data.map((item, index) => (          
           <Tr key={index}>
             {fields.map((field, fieldIndex) => (
-              <Td key={fieldIndex}>{item[field.key]}</Td>
+              <Td key={fieldIndex} textColor='light'>{item[field.key]}</Td>
             ))}
           </Tr>
         ))}

@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   return (    
     <Router>
-      <Flex w='100vw' h='100vh'>
+      <Flex w='100vw' h='100vh' bgColor="dark0">
         <Sidebar/>              
       </Flex>
     </Router>

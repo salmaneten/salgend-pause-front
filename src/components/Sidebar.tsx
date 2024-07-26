@@ -9,27 +9,27 @@ import Table from './Table.tsx';
 function Sidebar() {
   return (      
       <>
-      <Box w='250px' h='100%' bgColor='dark' borderRightWidth='3px' borderRightColor='yellow'>
+      <Box w='250px' h='100%' bgColor='dark2' borderRightWidth='3px' borderRightColor='light'>
           <Box h='2xs'>
 
-          </Box>
-          <UnorderedList styleType='none' textColor='white' spacing={2}>
+          </Box>         
+          <UnorderedList styleType='none' textColor='light' spacing={2}>
               <ListItem display='flex' gap="1" alignItems='center' padding='5px'>
                   <BsFillHouseDoorFill />
                   <Link to="/">
-                      <Text fontSize='xl'>Home</Text>
+                      <Text  fontSize='xl'>Home</Text>
                   </Link>
               </ListItem>
               <ListItem display='flex' gap="1" alignItems='center' padding='5px'>
-                  <FaUtensils/>
+                  <FaUtensils  />
                   <Link to="/tables">
-                      <Text fontSize='xl'>Tables</Text>
+                      <Text fontSize='xl'>Tables</Text> 
                   </Link>
               </ListItem>
           </UnorderedList>
       </Box>    
       <Routes>
-          <Route path='/tables' element={<Table />} />
+          <Route path='/tables' element={<Table />}/>
       </Routes>
       </>
   )

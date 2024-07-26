@@ -1,8 +1,6 @@
-const api_url = "http://localhost:8080/tables";
-
-export const fetchTables = async () => {
+export const fetchDataService = async (api_url ) => {
   const response = await fetch(api_url,{    
-    method: "get",
+    method: 'GET',
     headers: {
       "Content-Type": "application/json"
     }
