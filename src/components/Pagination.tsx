@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { fetchDataService } from "../services/FetchDataService.ts";
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
+import UsePaginatedQuery from "../services/UsePaginatedQuery.ts";
 
 interface PageInfo {
   totalElements: number;
@@ -10,27 +9,20 @@ interface PageInfo {
 
 interface PaginationProps {
   api_url: string;
-  pageSize: number;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  size: number;
 }
-// Transform the API response to only include the necessary properties
-const transformResponse = (data: any): PageInfo => {
-  console.log(data);
-  return {
-    totalPages: data.totalPages,
-    totalElements: data.totalElements,
-  };
-};
-
-const Pagination = <PaginationProps,>({ api_url, currentPage, setCurrentPage, size, setSize}) => {
-  console.log(`${api_url}?page=${currentPage}&size=${size}`);
-  const { data } = useQuery<PageInfo>({
-    queryKey: ["pages", currentPage, size],
-    queryFn: () => fetchDataService(`${api_url}?page=${currentPage}&size=${size}`)
-  });
+const Pagination = ({
+  api_url,
+  currentPage,
+  setCurrentPage,
+  size,
+}: PaginationProps) => {
+  const { data } = UsePaginatedQuery(api_url, currentPage, size, "pages");
 
   const totalPages = data?.totalPages || 0;
 
-  // Create an array of page numbers using Array.from
   const pages = [...Array.from({ length: totalPages }, (_, i) => i + 1)];
 
   return (
@@ -38,14 +30,14 @@ const Pagination = <PaginationProps,>({ api_url, currentPage, setCurrentPage, si
       {pages.map((page, index) => {
         return (
           <Button
-           size='xs'
+            size="xs"
             bgColor="yellow"
             _hover={{
               bgColor: "vividYellow",
             }}
             key={index}
             onClick={() => {
-              setCurrentPage(page-1);
+              setCurrentPage(page - 1);
             }}
           >
             {page}
