@@ -2,11 +2,6 @@ import React from "react";
 import { Button, Flex } from "@chakra-ui/react";
 import UsePaginatedQuery from "../services/UsePaginatedQuery.ts";
 
-interface PageInfo {
-  totalElements: number;
-  totalPages: number;
-}
-
 interface PaginationProps {
   api_url: string;
   currentPage: number;
@@ -31,9 +26,9 @@ const Pagination = ({
         return (
           <Button
             size="xs"
-            bgColor="yellow"
+            bgColor={page!==currentPage+1? "yellow": "vividYellow"}
             _hover={{
-              bgColor: "vividYellow",
+              bgColor: page!==currentPage+1? "vividYellow": "yellow",
             }}
             key={index}
             onClick={() => {
