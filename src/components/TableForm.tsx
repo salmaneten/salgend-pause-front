@@ -22,20 +22,19 @@ interface FormValues {
   numberOfGuests: string;
 }
 
-
 const API_URL = "http://localhost:8080/tables";
 const TableForm = ({ refetch }) => {
-  const [alertStatus, setAlertStatus] = useState(""); 
+  const [alertStatus, setAlertStatus] = useState("");
   const mutation = useMutation<any, Error, FormValues>({
     mutationFn: (data) => postDataService(API_URL, data),
     onSuccess: (data) => {
       refetch();
       setAlertStatus("success");
-       setTimeout(() => setAlertStatus(""), 3000);
+      setTimeout(() => setAlertStatus(""), 3000);
     },
     onError: () => {
       setAlertStatus("error");
-       setTimeout(() => setAlertStatus(""), 3000);
+      setTimeout(() => setAlertStatus(""), 3000);
     },
   });
 
@@ -54,11 +53,13 @@ const TableForm = ({ refetch }) => {
     }
   };
   return (
-    <Box bgColor='dark2' borderRadius='13px' flex='1' padding='14px'>
+    <Box bgColor="dark2" borderRadius="13px" flex="1" padding="14px">
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Heading textColor='light' mb={4}>Create Table</Heading>
+        <Heading textColor="light" mb={4}>
+          Create Table
+        </Heading>
         <FormControl isInvalid={!!errors.numberOfGuests}>
-          <FormLabel textColor='light'>Number of Guests</FormLabel>
+          <FormLabel textColor="light">Number of Guests</FormLabel>
           <NumberInput
             defaultValue={3}
             min={3}
@@ -66,12 +67,13 @@ const TableForm = ({ refetch }) => {
             keepWithinRange={true}
             clampValueOnBlur={false}
           >
-            <NumberInputField color='light'
+            <NumberInputField
+              color="light"
               {...register("numberOfGuests", { valueAsNumber: true })}
             />
             <NumberInputStepper>
-              <NumberIncrementStepper color='light'/>
-              <NumberDecrementStepper color='light'/>
+              <NumberIncrementStepper color="light" />
+              <NumberDecrementStepper color="light" />
             </NumberInputStepper>
           </NumberInput>
         </FormControl>
