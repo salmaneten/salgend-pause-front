@@ -84,7 +84,7 @@ const TableForm = ({ refetch }) => {
           isLoading={isSubmitting}
           type="submit"
         >
-          Submit
+          Ajouter
         </Button>
       </Form>
       {alertStatus === "success" && (
