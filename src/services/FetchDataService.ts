@@ -1,4 +1,4 @@
-export const fetchDataService = async (api_url ) => {
+export const fetchDataService = async (api_url) => {
   const response = await fetch(api_url,{    
     method: 'GET',
     headers: {
