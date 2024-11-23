@@ -29,7 +29,7 @@ interface InfoPage {
     };
     empty: boolean;
 }
-interface Table {  
+export interface Table {  
   tableNumber: number;
   numberOfGuests: number;
 }

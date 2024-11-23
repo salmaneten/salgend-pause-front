@@ -21,6 +21,8 @@ interface DataTableProps<T> {
   api_url: string;
   currentPage: number;
   setCurrentPage: (page: number) => void;
+  selectedRow: number | null;
+  setSelectedRow: (row: number | null) => void;
   size: number;
 }
 
@@ -30,6 +32,8 @@ const DataTable = <T,>({
   api_url,
   currentPage,
   setCurrentPage,
+  selectedRow,
+  setSelectedRow,
   size,
 }: DataTableProps<T>) => {
   return (
@@ -46,9 +50,14 @@ const DataTable = <T,>({
         </Thead>
         <Tbody>
           {data.map((item, index) => (
-            <Tr key={index}>
+            <Tr key={index}
+                cursor="pointer"
+                onClick={() => setSelectedRow(index)}
+                bg={selectedRow === index ? "yellow" : "dark5"}
+                textColor={selectedRow === index ? "dark5" : "light"}          
+                _hover={{ bg: "yellow", textColor: "dark5" }}>
               {fields.map((field, fieldIndex) => (
-                <Td key={fieldIndex} textColor="light">
+                <Td key={fieldIndex} >
                   {item[field.key]}
                 </Td>
               ))}

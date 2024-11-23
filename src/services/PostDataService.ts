@@ -1,4 +1,5 @@
 export const postDataService = async (api_url: string, data: any) => {
+  console.log(data);
   const response = await fetch(api_url, {
     method: "POST",
     headers: {
