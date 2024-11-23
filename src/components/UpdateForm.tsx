@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   Alert,
@@ -19,15 +19,26 @@ import { useMutation } from "@tanstack/react-query";
 import { postDataService } from "../services/PostDataService.ts";
 
 interface FormValues {
+  id: number | null;
+  number: number;
   numberOfGuests: string;
 }
 
 const API_URL = "http://localhost:8080/tables";
-const TableForm = ({ refetch }) => {
+const UpdateForm = ({ refetch, rowContent }) => {
   const [alertStatus, setAlertStatus] = useState("");
+  const [numberOfGuests, setNumberOfGuests] = useState(
+    rowContent?.numberOfGuests
+  );
+  useEffect(() => {
+    setNumberOfGuests(rowContent?.numberOfGuests);
+    setValue("numberOfGuests", rowContent?.numberOfGuests);
+    setValue("id", rowContent.id);
+    setValue("number", rowContent?.number);
+  }, [rowContent]);
   const mutation = useMutation<any, Error, FormValues>({
     mutationFn: (data) => postDataService(API_URL, data),
-    onSuccess: (data) => {
+    onSuccess: () => {
       refetch();
       setAlertStatus("success");
       setTimeout(() => setAlertStatus(""), 3000);
@@ -41,8 +52,15 @@ const TableForm = ({ refetch }) => {
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({
+    defaultValues: {
+      id: rowContent.id,
+      number: rowContent.number,
+      numberOfGuests: rowContent.numberOfGuests,
+    },
+  });
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
     try {
@@ -52,20 +70,25 @@ const TableForm = ({ refetch }) => {
       // Handle the error, display a message to the user, etc.
     }
   };
+  
   return (
     <Box bgColor="dark2" borderRadius="13px" flex="1" padding="14px">
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Heading textColor="light" mb={4}>
-          Create Table
+          Update Table
         </Heading>
         <FormControl isInvalid={!!errors.numberOfGuests}>
           <FormLabel textColor="light">Number of Guests</FormLabel>
           <NumberInput
-            defaultValue={3}
+            value={numberOfGuests}
             min={3}
             max={8}
             keepWithinRange={true}
             clampValueOnBlur={false}
+            onChange={(value) => {
+              setValue("numberOfGuests", value); // Update React Hook Form's value
+              setNumberOfGuests(value);
+            }}
           >
             <NumberInputField
               color="light"
@@ -86,7 +109,7 @@ const TableForm = ({ refetch }) => {
           isLoading={isSubmitting}
           type="submit"
         >
-          Add
+          Update
         </Button>
       </Form>
       {alertStatus === "success" && (
@@ -105,4 +128,4 @@ const TableForm = ({ refetch }) => {
   );
 };
 
-export default TableForm;
+export default UpdateForm;
