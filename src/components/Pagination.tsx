@@ -8,18 +8,18 @@ interface PageInfo {
 }
 
 interface PaginationProps {
-  api_url: string;
+  endpoint: string;
   currentPage: number;
   setCurrentPage: (page: number) => void;
   size: number;
 }
 const Pagination = ({
-  api_url,
+  endpoint,
   currentPage,
   setCurrentPage,
   size,
 }: PaginationProps) => {
-  const { data } = UsePaginatedQuery(api_url, currentPage, size, "pages");
+  const { data } = UsePaginatedQuery(endpoint, currentPage, size, "pages");
 
   const totalPages = data?.totalPages || 0;
 

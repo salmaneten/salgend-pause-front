@@ -17,13 +17,14 @@ import {
 import { Form } from "react-bootstrap";
 import { useMutation } from "@tanstack/react-query";
 import { postDataService } from "../services/PostDataService.ts";
+import { API_BASE_URL } from "../config/api.ts";
 
 interface FormValues {
   numberOfGuests: string;
 }
+const API_URL = `${API_BASE_URL}/tables`;
 
-const API_URL = "http://localhost:8080/tables";
-const TableForm = ({ refetch }) => {
+const AddTableForm = ({ refetch }) => {
   const [alertStatus, setAlertStatus] = useState("");
   const mutation = useMutation<any, Error, FormValues>({
     mutationFn: (data) => postDataService(API_URL, data),
@@ -92,7 +93,7 @@ const TableForm = ({ refetch }) => {
       {alertStatus === "success" && (
         <Alert status="success" mb={4}>
           <AlertIcon />
-          Data uploaded to the server. Fire on!
+          Table Added successfully 
         </Alert>
       )}
       {alertStatus === "error" && (
@@ -105,4 +106,4 @@ const TableForm = ({ refetch }) => {
   );
 };
 
-export default TableForm;
+export default AddTableForm;

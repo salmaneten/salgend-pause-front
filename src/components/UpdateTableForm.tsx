@@ -25,7 +25,7 @@ interface FormValues {
 }
 
 const API_URL = "http://localhost:8080/tables";
-const UpdateForm = ({ refetch, rowContent }) => {
+const UpdateTableForm = ({ refetch, rowContent }) => {
   const [alertStatus, setAlertStatus] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState(
     rowContent?.numberOfGuests
@@ -128,4 +128,4 @@ const UpdateForm = ({ refetch, rowContent }) => {
   );
 };
 
-export default UpdateForm;
+export default UpdateTableForm;

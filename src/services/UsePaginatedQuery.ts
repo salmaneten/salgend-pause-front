@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchDataService } from './FetchDataService.ts';
+import {API_BASE_URL} from '../config/api.ts'
 // Define the API response interface
 interface InfoPage {
     totalPages: number;
@@ -30,19 +31,19 @@ interface InfoPage {
     empty: boolean;
 }
 export interface Table {  
-  tableNumber: number;
+  number: number;
   numberOfGuests: number;
 }
 
  const UsePaginatedQuery = (
-    api_url,
+    endpoint: string,
     currentPage: number,
     size: number,
     queryKeyPrefix: string = "data"
 ) => {
     return useQuery<InfoPage>({
     queryKey:[queryKeyPrefix, currentPage, size],
-    queryFn: () => fetchDataService(`${api_url}?page=${currentPage}&size=${size}`),
+    queryFn: () => fetchDataService(`${API_BASE_URL}/${endpoint}?page=${currentPage}&size=${size}`),
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,

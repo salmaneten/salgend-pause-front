@@ -1,9 +1,8 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import './App.css';
 import Sidebar from './components/Sidebar.tsx';
-import Table from './components/Table.tsx';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 
 
 function App() {

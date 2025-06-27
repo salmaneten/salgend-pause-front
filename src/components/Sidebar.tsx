@@ -1,10 +1,17 @@
 import React from "react";
-import { Box, ListItem, UnorderedList } from "@chakra-ui/react";
+import { Box, ListItem, UnorderedList, Text } from "@chakra-ui/react";
 import { BsFillHouseDoorFill } from "react-icons/bs";
 import { FaUtensils } from "react-icons/fa";
-import { Text } from "@chakra-ui/react";
 import { Link, Route, Routes } from "react-router-dom";
 import Table from "./Table.tsx";
+
+// Simple Home component
+const Home = () => (
+  <Box p={4} textColor="light">
+    <Text fontSize="2xl">Welcome to Restaurant Management</Text>
+    <Text>Select Tables from the sidebar to manage your restaurant tables.</Text>
+  </Box>
+);
 
 function Sidebar() {
   return (
@@ -32,9 +39,12 @@ function Sidebar() {
           </ListItem>
         </UnorderedList>
       </Box>
-      <Routes>
-        <Route path="/tables" element={<Table />} />
-      </Routes>
+      <Box flex="1" p={4}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tables" element={<Table />} />
+        </Routes>
+      </Box>
     </>
   );
 }
