@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import {
   Table,
   Thead,
@@ -7,8 +7,13 @@ import {
   Th,
   Td,
   TableContainer,
+  useDisclosure,
 } from "@chakra-ui/react";
 import Pagination from "./Pagination.tsx";
+import {
+  BsFillTrash3Fill,  
+} from "react-icons/bs";
+import AlerteDeleteTable from "../alerts/AlerteDeleteTable.tsx";
 
 interface Field {
   label: string;
@@ -18,7 +23,7 @@ interface Field {
 interface DataTableProps<T> {
   data: T[];
   fields: Field[];
-  api_url: string;
+  endpoint: string;
   currentPage: number;
   setCurrentPage: (page: number) => void;
   selectedRow: number | null;
@@ -26,16 +31,19 @@ interface DataTableProps<T> {
   size: number;
 }
 
+
 const DataTable = <T,>({
   data,
   fields,
-  api_url,
+  endpoint,
   currentPage,
   setCurrentPage,
   selectedRow,
   setSelectedRow,
   size,
 }: DataTableProps<T>) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef(null);
   return (
     <TableContainer flex="2" bgColor="dark5" borderRadius="12px">
       <Table>
@@ -46,27 +54,32 @@ const DataTable = <T,>({
                 {field.label}
               </Th>
             ))}
+            <Th></Th>
           </Tr>
         </Thead>
         <Tbody>
           {data.map((item, index) => (
-            <Tr key={index}
-                cursor="pointer"
-                onClick={() => setSelectedRow(index)}
-                bg={selectedRow === index ? "yellow" : "dark5"}
-                textColor={selectedRow === index ? "dark5" : "light"}          
-                _hover={{ bg: "yellow", textColor: "dark5" }}>
+            <Tr
+              key={index}
+              cursor="pointer"
+              onClick={() => setSelectedRow(index)}
+              bg={selectedRow === index ? "yellow" : "dark5"}
+              textColor={selectedRow === index ? "dark5" : "light"}
+              _hover={{ bg: "yellow", textColor: "dark5" }}
+            >
               {fields.map((field, fieldIndex) => (
-                <Td key={fieldIndex} >
-                  {item[field.key]}
-                </Td>
+                <Td key={fieldIndex}>{item[field.key]}</Td>
               ))}
+              <Td>
+                <BsFillTrash3Fill onClick={onOpen} />
+                <AlerteDeleteTable isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef} />
+              </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
       <Pagination
-        api_url={api_url}
+        endpoint={endpoint}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         size={size}
